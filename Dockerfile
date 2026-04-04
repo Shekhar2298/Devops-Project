@@ -1,2 +1,6 @@
 FROM tomcat:9
-COPY webapp.war /usr/local/tomcat/webapps/
+
+RUN rm -rf /usr/local/tomcat/webapps/ROOT
+
+COPY index.html /usr/local/tomcat/webapps/ROOT/
+COPY style.css /usr/local/tomcat/webapps/ROOT/
