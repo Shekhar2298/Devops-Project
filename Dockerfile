@@ -1,2 +1,2 @@
-FROM nginx
-COPY index.html /usr/share/nginx/html/index.html
+FROM tomcat:9
+COPY webapp.war /usr/local/tomcat/webapps/
