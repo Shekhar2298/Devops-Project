@@ -1,3 +1,2 @@
-git add Dockerfile
-git commit -m "Added Dockerfile"
-git push origin main
+FROM nginx
+COPY index.html /usr/share/nginx/html/index.html
