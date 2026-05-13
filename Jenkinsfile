@@ -10,7 +10,6 @@ pipeline {
 
         stage('Verify Files') {
             steps {
-                sh 'pwd'
                 sh 'ls -la'
             }
         }
@@ -21,9 +20,25 @@ pipeline {
             }
         }
 
-        stage('Docker Images') {
+        stage('Docker Login') {
             steps {
-                sh 'docker images'
+                withCredentials([usernamePassword(
+                    credentialsId: 'dockerhub-creds',
+                    usernameVariable: 'DOCKER_USER',
+                    passwordVariable: 'DOCKER_PASS'
+                )]) {
+
+                    sh '''
+                    echo $DOCKER_PASS | docker login \
+                    -u $DOCKER_USER --password-stdin
+                    '''
+                }
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                sh 'docker push $IMAGE_NAME:$TAG'
             }
         }
     }
