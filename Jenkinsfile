@@ -8,15 +8,9 @@ pipeline {
 
     stages {
 
-        stage('Clone Repository') {
-            steps {
-                git branch: 'main',
-                url: 'https://github.com/Shekhar2298/Devops-Project.git'
-            }
-        }
-
         stage('Verify Files') {
             steps {
+                sh 'pwd'
                 sh 'ls -la'
             }
         }
