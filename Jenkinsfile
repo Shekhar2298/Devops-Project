@@ -4,11 +4,11 @@ pipeline {
     stages {
 
         stage('Deploy Through Ansible Server') {
+
             steps {
 
-                sh '''
-                ssh ec2-user@32.198.45.184"
-
+                sh """
+                ssh ec2-user@32.198.45.184 '
                 cd ~/Devops-Project &&
 
                 git pull origin main &&
@@ -18,8 +18,8 @@ pipeline {
                 docker push shekhar2298/devops-static-site:latest &&
 
                 ansible-playbook -i inventory deploy.yml
-                "
-                '''
+                '
+                """
             }
         }
     }
