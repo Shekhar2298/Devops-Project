@@ -58,10 +58,20 @@ pipeline {
             steps {
                 sh '''
                 ansible-playbook \
-                -i /home/ec2-user/ansible/inventory \
-                /home/ec2-user/ansible/deploy.yml
+                -i inventory \
+                deploy.yml
                 '''
             }
+        }
+    }
+
+    post {
+        success {
+            echo 'Application deployed successfully!'
+        }
+
+        failure {
+            echo 'Pipeline failed!'
         }
     }
 }
