@@ -9,7 +9,7 @@ pipeline {
 
                 sh """
                 ssh ec2-user@32.198.45.184 '
-                cd ~/Devops-Project &&
+                cd ~/devops-project &&
 
                 git pull origin main &&
 
