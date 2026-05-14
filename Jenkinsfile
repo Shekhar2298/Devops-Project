@@ -3,21 +3,14 @@ pipeline {
 
     stages {
 
-        stage('Deploy Through Ansible Server') {
+        stage('Trigger Deployment') {
 
             steps {
 
                 sh """
                 ssh ec2-user@32.198.45.184 '
                 cd ~/devops-project &&
-
-                git pull origin main &&
-
-                docker build -t shekhar2298/devops-static-site:latest . &&
-
-                docker push shekhar2298/devops-static-site:latest &&
-
-                ansible-playbook -i inventory deploy.yml
+                ./deploy.sh
                 '
                 """
             }
