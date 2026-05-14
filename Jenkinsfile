@@ -20,6 +20,12 @@ pipeline {
             }
         }
 
+        stage('Tag Latest Image') {
+            steps {
+                sh 'docker tag $IMAGE_NAME:$TAG $IMAGE_NAME:latest'
+            }
+        }
+
         stage('Docker Login') {
             steps {
                 withCredentials([usernamePassword(
@@ -36,9 +42,25 @@ pipeline {
             }
         }
 
-        stage('Push Docker Image') {
+        stage('Push Version Tag') {
             steps {
                 sh 'docker push $IMAGE_NAME:$TAG'
+            }
+        }
+
+        stage('Push Latest Tag') {
+            steps {
+                sh 'docker push $IMAGE_NAME:latest'
+            }
+        }
+
+        stage('Deploy Application') {
+            steps {
+                sh '''
+                ansible-playbook \
+                -i /home/ec2-user/ansible/inventory \
+                /home/ec2-user/ansible/deploy.yml
+                '''
             }
         }
     }
