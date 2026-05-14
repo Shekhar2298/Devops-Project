@@ -1,0 +1,21 @@
+---
+- hosts: web
+  become: true
+
+  tasks:
+
+    - name: Pull latest Docker image
+      shell: docker pull shekhar2298/devops-static-site:latest
+
+    - name: Stop old container
+      shell: docker stop static-site || true
+
+    - name: Remove old container
+      shell: docker rm static-site || true
+
+    - name: Run new container
+      shell: |
+        docker run -d \
+        --name static-site \
+        -p 80:80 \
+        shekhar2298/devops-static-site:latest
